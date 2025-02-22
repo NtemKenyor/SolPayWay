@@ -28,3 +28,11 @@ pre {
     text-align: left;
     display: inline-block;
 }
+.logo {
+    margin-bottom: 20px;
+}
+
+button{
+    padding: 9px;
+    border-radius: 7px;
+}
