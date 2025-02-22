@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolPayWay</title>
+    <link rel="stylesheet" href="style/style.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .payment-section, .why-section, .code-section {
+            margin: 30px 0;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .feature {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        pre {
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            display: inline-block;
+        }
+    </style> -->
+</head>
+<body>
+    <!-- Header and Welcome Section -->
+    <header class="header">
+        <h1>Welcome to SolPayWay</h1>
+        <p>The fastest and easiest way to integrate payments on Solana.</p>
+    </header>
+
+    <!-- Create Payment Button Section -->
+    <section class="payment-section">
+        <button id="generate-btn">Generate Payment Link</button>
+        <p id="payment-url" class="payment-url"></p>
+    </section>
+
+    <!-- Why Use SolPayWay Section -->
+    <section class="why-section">
+        <h2>Why Use SolPayWay?</h2>
+        <div class="features">
+            <div class="feature">Zero Fees</div>
+            <div class="feature">Decentralized</div>
+            <div class="feature">Open Source</div>
+            <div class="feature">Secure</div>
+            <div class="feature">Easy Integration</div>
+        </div>
+    </section>
+
+    <!-- Code Snippet Section -->
+    <section class="code-section">
+        <h2>Easy Integration</h2>
+        <p>Direct Link Integration:</p>
+        <pre><code>&lt;a href='https://solpayway.com/pay/YOUR_ID'&gt;Pay with SolPayWay&lt;/a&gt;</code></pre>
+        
+        <p>JavaScript SDK Integration:</p>
+        <pre><code>&lt;script src="https://solpayway.com/sdk.js"&gt;&lt;/script&gt;
+const payment = new SolPayWay({
+    amount: "1 SOL",
+    receiver: "YourWalletAddress",
+    sender: "UserWalletAddress",
+    successUrl: "https://yourwebsite.com/success",
+    cancelUrl: "https://yourwebsite.com/cancel"
+});
+payment.createButton("pay-button");</code></pre>
+    </section>
+
+    <script src="script/script.js"></script>
+    <!-- <script>
+        document.getElementById("generate-btn").addEventListener("click", function() {
+            document.getElementById("payment-url").innerText = "https://solpayway.com/pay/YOUR_ID";
+        });
+    </script> -->
+</body>
+</html>

@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #121212;
+    color: white;
+    padding: 20px;
+}
+.header {
+    margin-bottom: 30px;
+}
+.payment-section, .why-section, .code-section {
+    margin: 30px 0;
+}
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.feature {
+    background: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+pre {
+    background: #222;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    display: inline-block;
+}
