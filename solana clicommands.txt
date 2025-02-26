@@ -1,0 +1,54 @@
+solana address
+solana config get
+cd /home/kenyor/.config/solana/
+ls -a
+solana address id.json
+solana address /id.json
+history | grep "solana config"
+solana address -k id.json
+solana address -k soon.json
+solana address -k id.json --url mainnet
+solana airdrop CXDdQc9jzr1ufkj3G51oYuUX8GnFBPAT76yrmnEYRAPa
+solana airdrop 5 CXDdQc9jzr1ufkj3G51oYuUX8GnFBPAT76yrmnEYRAPa
+
+curl -X POST "https://roynek.com/callQuickNode/quickstarter.php"   -H "Content-Type: application/x-www-form-urlencoded"   -d "publicKey="Ayds8eAKkK6JhLAFZZ7JPc5rvmFmBX8p6Ua26DQ4uJW8"
+solana transfer 6dVg7wGA2xnkNtcJXDgzDpD6BYvLZqExJ8AGqUoXUJqN 5 --allow-unfunded-recipient
+solana balance 6dVg7wGA2xnkNtcJXDgzDpD6BYvLZqExJ8AGqUoXUJqN
+
+
+solana-test-validator
+rm -rf ~/.solana/test-validator/
+solana-test-validator --reset
+solana program deploy target/deploy/dating_dapp.so --keypair /home/kenyor/.config/solana/soon.json 
+
+
+config setting
+solana config set --url http://127.0.0.1:8899
+solana config set --url mainnet
+solana config set --keypair sonic.json
+solana config set --url https://api.mainnet-beta.solana.com
+solana config set --url https://api.devnet.solana.com
+
+
+
+Building and deployment:
+cargo build
+solana program deploy target/deploy/dating_dapp.so
+cargo deploy
+solana program deploy target/deploy/dating_dapp.sosolana program close 2F28mWPkSGWFXcCjc22yhpYvioUbAJsBnwEVR76uUwiw --keypair keypair.json
+solana program close 2F28mWPkSGWFXcCjc22yhpYvioUbAJsBnwEVR76uUwiw --keypair keypair.json
+solana account 2F28mWPkSGWFXcCjc22yhpYvioUbAJsBnwEVR76uUwiw --url <network-url> --keypair keypair.json
+solana account 2F28mWPkSGWFXcCjc22yhpYvioUbAJsBnwEVR76uUwiw  --keypair keypair.json
+solana account 2F28mWPkSGWFXcCjc22yhpYvioUbAJsBnwEVR76uUwiw  --keypair target/deploy/dating_dapp-keypair.json
+solana-keygen new --outfile new_program_keypair.json
+solana program deploy target/deploy/dating_dapp.so --keypair new_program_keypair.json
+solana program deploy target/deploy/dating_da
+solana config get
+solana program deploy target/deploy/dating_dapp.so --keypair /home/kenyor/.config/solana/soon.json 
+solana-keygen new --outfile new_program_keypair.json
+solana program deploy target/deploy/dating_dapp.so --keypair new_program_keypair.json
+solana airdrop 5 CvPigo8NKEtYhAKGuwaYxtBv76F4a6kXYYfSPpwZK7pP
+solana program deploy target/deploy/dating_dapp.so --keypair new_program_keypair.json
+solana program deploy target/deploy/dating_dapp.so --keypair new_program_keypair.json --url devnet
+solana balance new_program_keypair.json
+solana program deploy target/deploy/dating_dapp.so --keypair new_program_keypair.json --url devnet
