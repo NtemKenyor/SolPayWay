@@ -21,24 +21,40 @@
 <body onload="disableCache()">
 
     <h1>SolPayWay SDK Test</h1>
-    <p>You are about to pay 0.05 Sol - if you do not have Solana, get it from the test faucet: <a href="https://faucet.solana.com/"> Solana Faucet </a> </p>
-    <button id="pay-button">Loading...</button>
+    <p>You are about to pay 0.05 Sol on the devnet - if you do not have Solana, get it from the Solana faucet: <a href="https://faucet.solana.com/"> Solana Faucet </a> </p>
+
+    <br/>
+    <button style="padding: 9px;" id="multi-pay-button">Click to Pay[Multi-Pay]</button>
+
+    <button style="padding: 9px;" id="pay-button">Click to Pay[Multi-Pay]</button>
 
     <!-- <script src="https://solpayway.com/sdk.js?t=<?=time()?>"></script> -->
-    <script src="script/sdk.js?time=<?=time()?>"></script>
+    <script src="script/sdk.js?tm=<?=time()?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            document.getElementById("pay-button")
+            payment_btn = document.getElementById("multi-pay-button");
+            payment_btn.onclick = async () => {
+                const payment = new SolPayWay({
+                    amount: "0.05",
+                    receiver: "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
+                    successUrl: "https://yourwebsite.com/success",
+                    cancelUrl: "https://yourwebsite.com/cancel"
+                });
+                // payment.createButton("pay-button");
+
+                payment.showPaymentOptions();
+            }
+            
+
             const payment = new SolPayWay({
                 amount: "0.05",
                 receiver: "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
                 successUrl: "https://yourwebsite.com/success",
                 cancelUrl: "https://yourwebsite.com/cancel"
             });
-            // payment.createButton("pay-button");
+            payment.createButton("pay-button");
 
-            payment.showPaymentOptions();
         });
     </script>
 

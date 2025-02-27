@@ -1,5 +1,6 @@
 class SolPayWay {
     constructor({ amount, receiver, successUrl, cancelUrl, startTime }) {
+        
         this.amount = amount;
         this.receiver = receiver;
         this.successUrl = successUrl;
@@ -29,7 +30,7 @@ class SolPayWay {
         }
     }
 
-    async getWalletBalance() {
+    getWalletBalance = async () =>  {
         try {
             const balance = await this.connection.getBalance(this.keypair.publicKey);
             return balance / solanaWeb3.LAMPORTS_PER_SOL;
@@ -38,6 +39,17 @@ class SolPayWay {
             return 0;
         }
     }
+
+
+    /* async getWalletBalance(){
+        try {
+            const balance = await this.connection.getBalance(this.keypair.publicKey);
+            return balance / solanaWeb3.LAMPORTS_PER_SOL;
+        } catch (error) {
+            console.error("Error fetching wallet balance:", error);
+            return 0;
+        }
+    } */
 
     initUI() {
         const container = document.createElement("div");
@@ -94,9 +106,12 @@ class SolPayWay {
         };
     }
 
-    async payWithSolPayWay() {
+    payWithSolPayWay = async () =>  {
+        document.getElementById("payment-overlay").style.display = "none";
         document.getElementById("wallet-info").style.display = "block";
+        
         const balance = await this.getWalletBalance();
+        // await this.getWalletBalance();
         if (balance >= this.amount) {
             this.initiateTransaction();
         } else {
@@ -127,7 +142,7 @@ class SolPayWay {
                 })
             );
 
-            const { blockhash } = await this.connection.getLatestBlockhash();
+            const { blockhash } = await this.getBlockhash();
             transaction.recentBlockhash = blockhash;
             transaction.feePayer = publicKey;
 
@@ -163,18 +178,19 @@ class SolPayWay {
 
             console.log("Connected with:", provider.publicKey.toString());
 
-            const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"));
+            // const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"));
+            const connection = new solanaWeb3.Connection(this.network);
             const publicKey = provider.publicKey;
 
             const transaction = new solanaWeb3.Transaction().add(
                 solanaWeb3.SystemProgram.transfer({
                     fromPubkey: publicKey,
-                    toPubkey: new solanaWeb3.PublicKey("RECEIVER_WALLET_ADDRESS"), // Change to your receiver address
-                    lamports: 0.01 * solanaWeb3.LAMPORTS_PER_SOL,
+                    toPubkey: new solanaWeb3.PublicKey(this.receiver), // Change to your receiver address
+                    lamports: 0.01 * solanaWeb3.LAMPORTS_PER_SOL, // Sending 0.01 SOL
                 })
             );
 
-            const { blockhash } = await connection.getLatestBlockhash();
+            const { blockhash } = await this.getBlockhash();
             transaction.recentBlockhash = blockhash;
             transaction.feePayer = publicKey;
 
@@ -195,6 +211,8 @@ class SolPayWay {
     }
     
     showPaymentOptions() {
+        const self = this;
+
         const overlay = document.createElement("div");
         overlay.id = "payment-overlay";
         overlay.style.position = "fixed";
@@ -215,10 +233,10 @@ class SolPayWay {
         title.style.marginBottom = "20px";
     
         const buttons = [
-            { text: "Pay with SolPayWay", color: "#FF9800", action: () => alert("SolPayWay selected") },
-            { text: "Pay with Solflare", color: "#2196F3", action: () => this.payWithSolflare },
-            { text: "Pay with Phantom", color: "#9C27B0", action: this.payWithPhantom },
-            { text: "Pay with Card", color: "#4CAF50", action: () => alert("Card Payment selected") }
+            { text: "Pay with SolPayWay", color: "#FF9800", action: async () => self.payWithSolPayWay() },
+            { text: "Pay with Solflare", color: "#2196F3", action: async () => self.payWithSolflare() },
+            { text: "Pay with Phantom", color: "#9C27B0", action: async () => self.payWithPhantom() },
+            { text: "Pay with Card", color: "#4CAF50", action: async () => alert("Card Payment selected") }
         ];
     
         buttons.forEach(({ text, color, action }) => {
@@ -450,7 +468,7 @@ class SolPayWay {
                 setTimeout(() => progressDiv.remove(), 5000);
                 window.location.href = this.cancelUrl;
             }
-        }, 3000);
+        }, 5000);
     }
 }
 
