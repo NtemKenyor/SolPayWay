@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolPayWay SDK Test</title>
+    <!-- <script src="script/index.iife.min.js" defer></script> -->
+    <script src="https://unpkg.com/@solana/web3.js@1.98.0/lib/index.iife.min.js" defer></script> <!-- Solana SDK -->
+
+    <script>
+        // Prevent caching
+        function disableCache() {
+            const scripts = document.querySelectorAll("script[src]");
+            scripts.forEach(script => {
+                const src = script.src.split("?")[0];
+                script.src = `${src}?t=${new Date().getTime()}`;
+            });
+        }
+    </script>
+</head>
+<body onload="disableCache()">
+
+    <h1>SolPayWay SDK Test</h1>
+    <p>You are about to pay 0.05 Sol on the devnet - if you do not have Solana, get it from the Solana faucet: <a href="https://faucet.solana.com/"> Solana Faucet </a> </p>
+
+    <br/>
+    <button style="padding: 9px;" id="multi-pay-button">Click to Pay[Multi-Pay]</button>
+
+    <button style="padding: 9px;" id="pay-button">Click to Pay[Multi-Pay]</button>
+
+    <!-- <script src="https://solpayway.com/sdk.js?t=<?=time()?>"></script> -->
+    <script src="script/sdk.js?tm=<?=time()?>"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            payment_btn = document.getElementById("multi-pay-button");
+            payment_btn.onclick = async () => {
+                const payment = new SolPayWay({
+                    amount: "0.05",
+                    receiver: "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
+                    successUrl: "https://yourwebsite.com/success",
+                    cancelUrl: "https://yourwebsite.com/cancel"
+                });
+                // payment.createButton("pay-button");
+
+                payment.showPaymentOptions();
+            }
+            
+
+            /* const payment = new SolPayWay({
+                amount: "0.05",
+                receiver: "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
+                successUrl: "https://yourwebsite.com/success",
+                cancelUrl: "https://yourwebsite.com/cancel"
+            });
+            payment.createButton("pay-button"); */
+
+        });
+    </script>
+
+</body>
+</html>
