@@ -642,16 +642,16 @@ button:hover {
             <div class="code-example">
                 <div class="code-snippet">
                     <h3>Direct Link Integration</h3>
-                    <pre><code class="language-html">&lt;a href='https://solpayway.com/pay/YOUR_ID'&gt;Pay with SolPayWay&lt;/a&gt;</code></pre>
+                    <pre><code class="language-html">&lt;a href='https://roynek.com/SolPayWay/pay.html?receiver=YOUR_WALLET_ADDRESS'&gt;Pay with SolPayWay&lt;/a&gt;</code></pre>
                 </div>
                 <div class="code-explanation">
-                    <p>Simply add this link to your website to enable payments. Replace <code>YOUR_ID</code> with your unique payment ID.</p>
+                    <p>Simply add this link to your website to enable payments. Replace <code>YOUR_WALLET_ADDRESS</code> with your unique payment ID.</p>
                 </div>
             </div>
             <div class="code-example">
                 <div class="code-snippet">
                     <h3>JavaScript SDK Integration</h3>
-                    <pre><code class="language-javascript">&lt;script src="https://solpayway.com/sdk.js"&gt;&lt;/script&gt;
+                    <pre><code class="language-javascript">&lt;script src="https://roynek.com/SolPayWay/script/sdk.js"&gt;&lt;/script&gt;
     const payment = new SolPayWay({
         amount: "1 SOL",
         receiver: "YourWalletAddress",
@@ -692,7 +692,7 @@ button:hover {
             const buttonColor = document.getElementById("button-color").value.replace("#", "");
             const logoUrl = encodeURIComponent(document.getElementById("logo-url").value);
 
-            const url = `https://solpayway.com/pay?network=${network}&amount=${amount}&token=${token}&receiver=${receiverAddress}&description=${description}&bgColor=${bgColor}&textColor=${textColor}&buttonColor=${buttonColor}&logoUrl=${logoUrl}`;
+            const url = `https://roynek.com/SolPayWay/pay.html?network=${network}&amount=${amount}&token=${token}&receiver=${receiverAddress}&description=${description}&bgColor=${bgColor}&textColor=${textColor}&buttonColor=${buttonColor}&logoUrl=${logoUrl}`;
             document.getElementById("generated-url").value = url;
         };
 
