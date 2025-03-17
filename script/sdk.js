@@ -369,7 +369,7 @@ class SolPayWay {
             { text: "Pay with SolPayWay", color: "#FF9800", action: async () => self.payWithSolPayWay() },
             { text: "Pay with Solflare", color: "#2196F3", action: async () => self.payWithSolflare() },
             { text: "Pay with Phantom", color: "#9C27B0", action: async () => self.payWithPhantom() },
-            { text: "Pay with Card", color: "#4CAF50", action: async () => alert("Card Payment selected") }
+            { text: "Pay with Card", color: "#4CAF50", action: async () => self.loadPaymentForm() }
         ];
     
         buttons.forEach(({ text, color, action }) => {
@@ -753,7 +753,7 @@ class SolPayWay {
                 console.error("Error tracking transaction:", error);
             }
 
-            if (attempts >= 10) {
+            if (attempts >= 100) {
                 clearInterval(this.trackingInterval);
                 alert("Transaction tracking timed out.");
                 progressDiv.innerHTML = "<p>Transaction failed or took too long.</p>";
