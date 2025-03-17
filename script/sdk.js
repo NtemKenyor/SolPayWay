@@ -288,6 +288,9 @@ class SolPayWay {
         } catch (error) {
             console.error("Phantom Transaction Failed:", error);
             alert("Transaction failed. See console for details.");
+        } finally {
+            document.getElementById("payment-overlay").style.display = "none";
+            // document.getElementById("wallet-info").style.display = "block";
         }
     }
     
@@ -334,6 +337,9 @@ class SolPayWay {
         } catch (error) {
             console.error("Solflare Transaction Failed:", error);
             alert("Transaction failed. See console for details.");
+        } finally {
+            document.getElementById("payment-overlay").style.display = "none";
+            // document.getElementById("wallet-info").style.display = "block";
         }
     }
 
