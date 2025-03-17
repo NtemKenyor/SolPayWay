@@ -149,7 +149,7 @@ class SolPayWay {
         }
     }
 
-
+/* 
     async payWithPhantom() {
         if (!window.solana || !window.solana.isPhantom) {
             alert("Phantom Wallet not detected. Please install it.");
@@ -211,13 +211,6 @@ class SolPayWay {
             const blockhash = this.getBlockhash();
             console.log("Using blockhash:", blockhash);
         
-            /* const transaction = new solanaWeb3.Transaction().add(
-                solanaWeb3.SystemProgram.transfer({
-                    fromPubkey: this.keypair.publicKey,
-                    toPubkey: new solanaWeb3.PublicKey(this.receiver),
-                    lamports: this.amount * solanaWeb3.LAMPORTS_PER_SOL,
-                })
-            ); */
         
             // Set blockhash and fee payer
             // transaction.recentBlockhash = blockhash;
@@ -255,6 +248,95 @@ class SolPayWay {
         }
     }
     
+     */
+
+    async payWithPhantom() {
+        if (!window.solana || !window.solana.isPhantom) {
+            alert("Phantom Wallet not detected. Please install it.");
+            return;
+        }
+    
+        try {
+            const provider = window.solana;
+            const response = await provider.connect();
+            console.log("Connected with:", response.publicKey.toString());
+    
+            const publicKey = response.publicKey;
+    
+            const transaction = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: publicKey,
+                    toPubkey: new solanaWeb3.PublicKey(this.receiver), // Change to your receiver address
+                    lamports: 0.01 * solanaWeb3.LAMPORTS_PER_SOL, // Sending 0.01 SOL
+                })
+            );
+    
+            const { blockhash } = await this.connection.getRecentBlockhash();
+            transaction.recentBlockhash = blockhash;
+            transaction.feePayer = publicKey;
+    
+            const signedTransaction = await provider.signTransaction(transaction);
+            const signature = await this.connection.sendRawTransaction(signedTransaction.serialize());
+    
+            console.log("Transaction Signature:", signature);
+            alert(`Transaction sent! Signature: ${signature}`);
+    
+            // Track transaction
+            this.transactionSignature = signature;
+            this.trackTransaction();
+    
+        } catch (error) {
+            console.error("Phantom Transaction Failed:", error);
+            alert("Transaction failed. See console for details.");
+        }
+    }
+    
+    async payWithSolflare() {
+        if (!window.solflare || !window.solflare.isSolflare) {
+            alert("Solflare Wallet not detected. Please install it.");
+            return;
+        }
+    
+        try {
+            const provider = window.solflare;
+            await provider.connect();
+    
+            if (!provider.publicKey) {
+                throw new Error("Failed to connect to Solflare");
+            }
+    
+            console.log("Connected with:", provider.publicKey.toString());
+    
+            const { blockhash } = await this.connection.getRecentBlockhash();
+            console.log("Using blockhash:", blockhash);
+    
+            const transaction = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: provider.publicKey,
+                    toPubkey: new solanaWeb3.PublicKey(this.receiver), // Change to your receiver address
+                    lamports: 0.01 * solanaWeb3.LAMPORTS_PER_SOL, // Sending 0.01 SOL
+                })
+            );
+    
+            transaction.recentBlockhash = blockhash;
+            transaction.feePayer = provider.publicKey;
+    
+            const signedTransaction = await provider.signTransaction(transaction);
+            const signature = await this.connection.sendRawTransaction(signedTransaction.serialize());
+    
+            console.log("Transaction Signature:", signature);
+            alert(`Transaction sent! Signature: ${signature}`);
+    
+            // Track transaction
+            this.transactionSignature = signature;
+            this.trackTransaction();
+    
+        } catch (error) {
+            console.error("Solflare Transaction Failed:", error);
+            alert("Transaction failed. See console for details.");
+        }
+    }
+
     showPaymentOptions() {
         const self = this;
 
