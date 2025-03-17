@@ -1,5 +1,5 @@
 class SolPayWay {
-    constructor({ amount, receiver, successUrl, cancelUrl, startTime }) {
+    constructor({ amount, receiver, successUrl, cancelUrl, network, startTime,  }) {
         
         this.amount = amount;
         this.receiver = receiver;
@@ -7,11 +7,41 @@ class SolPayWay {
         this.cancelUrl = cancelUrl;
         this.startTime = startTime || Date.now();
         this.transactionSignature = null;
+        this.transactionId = null;
         this.trackingInterval = null;
         // this.network = "http://127.0.0.1:8899";
         // this.network = "https://api.devnet.solana.com";
-        this.network = "https://spring-quick-surf.solana-devnet.quiknode.pro/016ff48f0f7c3f1520e515c01dca9a83ef528317";
+        // this.network = "https://spring-quick-surf.solana-devnet.quiknode.pro/016ff48f0f7c3f1520e515c01dca9a83ef528317";
         // this.network = "http://127.0.0.1:3001/proxy";
+
+        // Map network names to their RPC endpoints
+        this.networkRpcMap = {
+            devnet: "https://api.devnet.solana.com",
+            mainnet: "https://api.mainnet-beta.solana.com",
+            sonictestnet: "https://sonic-testnet.rpc.com", // Replace with actual Sonic testnet RPC
+            sonicmainnet: "https://sonic-mainnet.rpc.com", // Replace with actual Sonic mainnet RPC
+            localhost: "http://127.0.0.1:8899",
+            custom: "https://spring-quick-surf.solana-devnet.quiknode.pro/016ff48f0f7c3f1520e515c01dca9a83ef528317"
+        };
+
+        // Validate and set the network RPC
+        if (!this.networkRpcMap[network]) {
+            // Check if the network is a valid URL
+            try {
+                new URL(network); // Throws an error if the network is not a valid URL
+                this.network = network; // Use the provided URL as the RPC endpoint
+            } catch {
+                throw new Error(`Unsupported network: ${network}. Supported networks: ${Object.keys(this.networkRpcMap).join(', ')}`);
+            }
+        } else {
+            this.network = this.networkRpcMap[network]; // Use the mapped RPC endpoint
+        }
+
+        // Validate and set the network RPC
+        // if (!this.networkRpcMap[network]) {
+        //     throw new Error(`Unsupported network: ${network}. Supported networks: ${Object.keys(this.networkRpcMap).join(', ')}`);
+        // }
+        // this.network = this.networkRpcMap[network];
 
         this.keypair = this.loadOrCreateWallet();
         this.connection = new solanaWeb3.Connection(this.network);
@@ -25,7 +55,7 @@ class SolPayWay {
         } else {
             const keypair = solanaWeb3.Keypair.generate();
             localStorage.setItem('solana_private_key', JSON.stringify(Array.from(keypair.secretKey)));
-            alert('New wallet created successfully!');
+            alert('New Payment wallet created successfully!');
             return keypair;
         }
     }

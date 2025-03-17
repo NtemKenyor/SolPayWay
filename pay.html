@@ -90,7 +90,7 @@
     </div>
 
     <!-- Include SDK with timestamp to prevent caching -->
-    <script src="script/sdk.js?t=<?=time()?>"></script>
+    <script src="script/sdk.js?t=<?=time()?>&id=748573857892847"></script>
 
     <script>
         // Function to parse URL parameters
@@ -151,8 +151,9 @@
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
                     successUrl: params.successUrl || "https://yourwebsite.com/success",
                     cancelUrl: params.cancelUrl || "https://yourwebsite.com/cancel",
-                    network: params.network || "devnet",
-                    token: params.token || "sol",
+                    network: params.network || "localhost",
+                    // network: params.network || "devnet",
+                    // token: params.token || "sol",
                 });
                 payment.showPaymentOptions();
             };
@@ -164,8 +165,9 @@
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
                     successUrl: params.successUrl || "https://yourwebsite.com/success",
                     cancelUrl: params.cancelUrl || "https://yourwebsite.com/cancel",
-                    network: params.network || "devnet",
-                    token: params.token || "sol",
+                    // network: params.network || "devnet",
+                    network: params.network || "localhost",
+                    // token: params.token || "sol",
                 });
                 payment.createButton("pay-button");
             };
