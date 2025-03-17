@@ -536,6 +536,165 @@ class SolPayWay {
         } */
     }
 
+    // SERVER_URL
+    // const SERVER_URL = "http://127.0.0.1:5000"; // Change this URL when needed
+    // '${SERVER_URL}/verify-payment/'
+
+    loadPaymentForm( SERVER_URL , amount = null, currency = 'USD') {
+        // Create the HTML structure
+        const paymentFormHTML = `
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                }
+                .payment-container {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                }
+                .payment-container h2 {
+                    margin-bottom: 10px;
+                }
+                .payment-container button {
+                    background-color: #f5a623;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                .payment-container button:hover {
+                    background-color: #d4881e;
+                }
+                .modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                }
+                .modal-content {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    width: 300px;
+                    text-align: center;
+                }
+                .modal-content input {
+                    width: 90%;
+                    margin: 10px 0;
+                    padding: 8px;
+                }
+                .modal-content button {
+                    background-color: #28a745;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    width: 100%;
+                    cursor: pointer;
+                }
+            </style>
+            <div class="payment-container">
+                <h2>${amount ? `Pay $${amount}` : 'Enter Payment Amount'}</h2>
+                ${amount ? '' : '<input type="number" id="amount" placeholder="Enter amount" min="1" required>'}
+                <p>Click the button below to pay securely.</p>
+                <button id="payButton">Pay Now</button>
+            </div>
+            <div class="modal" id="userModal">
+                <div class="modal-content">
+                    <h3>Enter Your Email</h3>
+                    <input type="email" id="email" placeholder="Enter your email">
+                    <button id="submitDetails">Continue to Payment</button>
+                </div>
+            </div>
+        `;
+    
+        // Inject the HTML into the body
+        document.body.innerHTML = paymentFormHTML;
+    
+        // Load Flutterwave script dynamically
+        const flutterwaveScript = document.createElement('script');
+        flutterwaveScript.src = 'https://checkout.flutterwave.com/v3.js';
+        document.head.appendChild(flutterwaveScript);
+    
+        // Add event listeners
+        document.getElementById('payButton').addEventListener('click', function () {
+            const amountInput = document.getElementById('amount');
+            if (amountInput && !amountInput.value) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+            document.getElementById('userModal').style.display = 'flex';
+        });
+    
+        document.getElementById('submitDetails').addEventListener('click', function () {
+            const email = document.getElementById('email').value;
+            // var amount = document.getElementById('amount') ? document.getElementById('amount').value : '${amount}';
+            var amount = document.getElementById('amount') ? document.getElementById('amount').value : '${amount}';
+    
+            if (!email) {
+                alert('Email is required.');
+                return;
+            }
+    
+            document.getElementById('userModal').style.display = 'none';
+    
+            FlutterwaveCheckout({
+                public_key: 'FLWPUBK_TEST-7909b193be2429cae121b42c7cbcdb4f-X',
+                tx_ref: 'tx-' + Date.now(),
+                amount: amount,
+                currency: currency,
+                payment_options: 'card, ussd, banktransfer',
+                customer: { email },
+                customizations: {
+                    title: 'My Website Payment',
+                    description: 'Payment for services',
+                    logo: 'https://via.placeholder.com/150',
+                },
+                callback: function (data) {
+                    alert('Payment successful! Transaction Reference: ' + data.transaction_id);
+                    fetch('${SERVER_URL}' + data.transaction_id, { method: 'GET' })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json().catch(() => {
+                                throw new Error('Invalid JSON response from server');
+                            });
+                        })
+                        .then(result => {
+                            alert(result.message || 'Payment verification successful!');
+                        })
+                        .catch(error => {
+                            console.error('Error verifying payment:', error);
+                            alert('An error occurred while verifying payment. Please try again.');
+                        });
+                },
+                onclose: function () {
+                    alert('Transaction closed. No payment was made.');
+                },
+            });
+        });
+    }
+    
+    // Example usage
+    // loadPaymentForm(); // For user-entered amount
+    // loadPaymentForm(50); // For fixed amount
+
     /* trackTransaction() {
         if (!this.transactionSignature) return;
         
