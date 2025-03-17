@@ -208,6 +208,21 @@ class SolPayWay {
 
             console.log("Connected with:", provider.publicKey.toString());
 
+            const blockhash = this.getBlockhash();
+            console.log("Using blockhash:", blockhash);
+        
+            /* const transaction = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: this.keypair.publicKey,
+                    toPubkey: new solanaWeb3.PublicKey(this.receiver),
+                    lamports: this.amount * solanaWeb3.LAMPORTS_PER_SOL,
+                })
+            ); */
+        
+            // Set blockhash and fee payer
+            // transaction.recentBlockhash = blockhash;
+            // transaction.feePayer = this.keypair.publicKey;
+
             // const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"));
             const connection = new solanaWeb3.Connection(this.network);
             const publicKey = provider.publicKey;
@@ -220,7 +235,7 @@ class SolPayWay {
                 })
             );
 
-            const { blockhash } = await this.getBlockhash();
+            // const { blockhash } = await this.getBlockhash();
             transaction.recentBlockhash = blockhash;
             transaction.feePayer = publicKey;
 
