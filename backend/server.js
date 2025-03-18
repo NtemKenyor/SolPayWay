@@ -11,7 +11,8 @@ const axios = require('axios'); // Import axios
 
 
 const app = express();
-const PORT = 3000;
+// const PORT = 3000;
+const PORT = 5000;
 // app.use(cors());
 
 const FLUTTERWAVE_SECRET_KEY = process.env.FLUTTERWAVE_SECRET_KEY;
