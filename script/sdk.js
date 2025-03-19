@@ -2,6 +2,7 @@ class SolPayWay {
     constructor({ amount, receiver, successUrl, cancelUrl, network, server, custom, transUnique, startTime,  }) {
         
         this.amount = amount;
+        this.sol_amount = amount;
         this.receiver = receiver;
         this.successUrl = successUrl;
         this.cancelUrl = cancelUrl;
@@ -42,7 +43,7 @@ class SolPayWay {
         //     throw new Error(`Unsupported network: ${network}. Supported networks: ${Object.keys(this.networkRpcMap).join(', ')}`);
         // }
         // this.network = this.networkRpcMap[network];
-
+        this.network_name = network;
         this.server = (server === 'local') ? 'http://localhost:3000/SolPayWay/backend' : 'https://roynek.com//SolPayWay/backend';
         this.verification_link = server + '/verify-payment';
         this.custom = (custom) ? custom : {
@@ -51,7 +52,7 @@ class SolPayWay {
             logo: 'https://via.placeholder.com/150',
         }
         this.transUnique = transUnique;
-        this.reward_network = this.network;
+        this.reward_network = this.network_name;
         this.payment_type = "solana"; // solana, card, ethereum etc
         this.keypair = this.loadOrCreateWallet();
         this.connection = new solanaWeb3.Connection(this.network);
@@ -556,7 +557,9 @@ class SolPayWay {
     // const SERVER_URL = "http://127.0.0.1:5000"; // Change this URL when needed
     // '${SERVER_URL}/verify-payment/'
 
-    loadPaymentForm(SERVER_URL=`${this.verification_link}`, amount = null, currency = 'USD') {
+    loadPaymentForm(amount = null, currency = 'USD') {
+        this.payment_type = "flutterwave"
+        const self = this;
         // Create the HTML structure
         const paymentFormHTML = `
             <style>
@@ -575,6 +578,7 @@ class SolPayWay {
                     border-radius: 8px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     text-align: center;
+                    color: #000;
                 }
                 .payment-container h2 {
                     margin-bottom: 10px;
@@ -641,6 +645,8 @@ class SolPayWay {
     
         // Inject the HTML into the body
         document.body.innerHTML = paymentFormHTML;
+
+        alert(`Others: ${self.successUrl}?network=${self.network}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=AMOUNT&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` ); 
     
         // Load Flutterwave script dynamically
         const flutterwaveScript = document.createElement('script');
@@ -679,8 +685,8 @@ class SolPayWay {
                 customizations: this.custom,
                 callback: function (data) {
                     alert('Payment successful! Transaction Reference: ' + data.transaction_id);
-                    let VER_LINK = `${SERVER_URL}/${data.transaction_id}`;
-                    // alert(VER_LINK);
+                    let VER_LINK = `${self.verification_link}/${data.transaction_id}`;
+                    alert(`${VER_LINK} ... Others: ${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` );
                     fetch(VER_LINK, { method: 'GET' })
                         .then(response => {
                             if (!response.ok) {
@@ -694,7 +700,7 @@ class SolPayWay {
                         .then(result => {
                             alert(result.message || 'Payment verification successful!');
                             // window.location.href = this.successUrl+'?network='+this.network;
-                            window.location.href = `${this.successUrl}?network=${this.network}&wallet_address=${this.receiver}&sol_amount=${this.amount}&usdt_paid=${amount}&payment_type=${this.payment_type}&s_network=${this.reward_network}&r_network=${this.network}&transaction_signature=${this.transactionSignature}&transaction_id=${this.transactionId}&transunique=${this.transUnique}`;
+                            window.location.href = `${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}`;
                         })
                         .catch(error => {
                             console.error('Error verifying payment:', error);
@@ -913,14 +919,17 @@ class SolPayWay {
                         alert("Transaction confirmed!");
                         progressDiv.innerHTML = "<p>Transaction finalized successfully!</p>";
                         setTimeout(() => progressDiv.remove(), 5000);
-                        window.location.href = this.successUrl;
+                        // window.location.href = this.successUrl;
+                        window.location.href = `${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}`;
+                        
                     }
                 }
             } catch (error) {
                 console.error("Error tracking transaction:", error);
             }
 
-            if (attempts >= 100) {
+            //12 attempts is 1 min if set at 5000. so 120 attempts is 10 mins
+            if (attempts >= 240) {
                 clearInterval(this.trackingInterval);
                 alert("Transaction tracking timed out.");
                 progressDiv.innerHTML = "<p>Transaction failed or took too long.</p>";
