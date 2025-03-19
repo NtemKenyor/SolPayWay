@@ -216,6 +216,7 @@ button:hover {
     align-items: center;
     animation: fadeIn 0.3s ease;
     overflow: scroll;
+    z-index: 1100;
 }
 
 @keyframes fadeIn {
@@ -682,7 +683,7 @@ button:hover {
     <script>
         // JavaScript for popup form and dynamic URL generation
         document.getElementById("generate-btn").addEventListener("click", function() {
-            document.getElementById("popup-form").style.display = "flex";
+            document.getElementById("popup-form").style.display = "block";
         });
 
         document.getElementById("close-popup").addEventListener("click", function() {
