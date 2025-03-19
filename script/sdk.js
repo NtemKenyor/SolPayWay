@@ -646,7 +646,7 @@ class SolPayWay {
         // Inject the HTML into the body
         document.body.innerHTML = paymentFormHTML;
 
-        alert(`Others: ${self.successUrl}?network=${self.network}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=AMOUNT&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` ); 
+        // console.log(`Others: ${self.successUrl}?network=${self.network}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=AMOUNT&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` ); 
     
         // Load Flutterwave script dynamically
         const flutterwaveScript = document.createElement('script');
@@ -686,7 +686,7 @@ class SolPayWay {
                 callback: function (data) {
                     alert('Payment successful! Transaction Reference: ' + data.transaction_id);
                     let VER_LINK = `${self.verification_link}/${data.transaction_id}`;
-                    alert(`${VER_LINK} ... Others: ${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` );
+                    console.log(`${VER_LINK} ... Others: ${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` );
                     fetch(VER_LINK, { method: 'GET' })
                         .then(response => {
                             if (!response.ok) {
