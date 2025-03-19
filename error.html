@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Error</title>
+    <style>
+        /* General Styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff4b4b, #d32f2f);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Error Message Container */
+        .error-message {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Keyframes for Fade-In Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Heading and Paragraph Styles */
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Button Styles */
+        .retry-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff4b4b;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .retry-button:hover {
+            background: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        /* Error Icon Animation */
+        .error-icon {
+            font-size: 4em;
+            color: #ff4b4b;
+            animation: shake 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* Background Particles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Error Message -->
+    <div class="error-message">
+        <div class="error-icon">❌</div>
+        <h1>Oops!</h1>
+        <p>Something went wrong. Please try again.</p>
+        <a href="https://roynek.com/SolPayWay/" class="retry-button">Retry Payment</a>
+    </div>
+
+    <!-- Background Particles -->
+    <div id="particle-container"></div>
+
+    <script>
+        // Particle Generator
+        const particleContainer = document.getElementById('particle-container');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.backgroundColor = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})`;
+            particleContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

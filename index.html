@@ -215,6 +215,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease;
+    overflow: scroll;
 }
 
 @keyframes fadeIn {
@@ -594,6 +595,14 @@ button:hover {
                     <input type="url" id="logo-url" placeholder="Enter logo URL">
                 </div>
                 <div class="form-group">
+                    <label for="success-url">Success URL:</label>
+                    <input type="url" id="success-url" value="https://roynek.com/SolPayWay/success.html" placeholder="Enter Success URL - Redirect">
+                </div>
+                <div class="form-group">
+                    <label for="error-url">Error URL:</label>
+                    <input type="url" id="error-url" value="https://roynek.com/SolPayWay/error.html" placeholder="Enter Error URL - Redirect">
+                </div>
+                <div class="form-group">
                     <h3>Generated URL:</h3>
                     <textarea id="generated-url" class="editable-url" readonly></textarea>
                 </div>
@@ -658,8 +667,8 @@ button:hover {
         amount: "1 SOL",
         receiver: "YourWalletAddress",
         sender: "UserWalletAddress",
-        successUrl: "https://yourwebsite.com/success",
-        cancelUrl: "https://yourwebsite.com/cancel"
+        successUrl: "https://roynek.com/SolPayWay/success.html",
+        cancelUrl: "https://roynek.com/SolPayWay/error.html"
     });
     payment.createButton("pay-button");</code></pre>
                 </div>
@@ -673,7 +682,7 @@ button:hover {
     <script>
         // JavaScript for popup form and dynamic URL generation
         document.getElementById("generate-btn").addEventListener("click", function() {
-            document.getElementById("popup-form").style.display = "block";
+            document.getElementById("popup-form").style.display = "flex";
         });
 
         document.getElementById("close-popup").addEventListener("click", function() {
@@ -693,8 +702,10 @@ button:hover {
             const textColor = document.getElementById("text-color").value.replace("#", "");
             const buttonColor = document.getElementById("button-color").value.replace("#", "");
             const logoUrl = encodeURIComponent(document.getElementById("logo-url").value);
+            const successUrl = encodeURIComponent(document.getElementById("success-url").value);
+            const errorUrl = encodeURIComponent(document.getElementById("error-url").value);
 
-            const url = `https://roynek.com/SolPayWay/pay.html?network=${network}&amount=${amount}&token=${token}&receiver=${receiverAddress}&description=${description}&bgColor=${bgColor}&textColor=${textColor}&buttonColor=${buttonColor}&logoUrl=${logoUrl}`;
+            const url = `https://roynek.com/SolPayWay/pay.html?network=${network}&amount=${amount}&token=${token}&receiver=${receiverAddress}&description=${description}&bgColor=${bgColor}&textColor=${textColor}&buttonColor=${buttonColor}&logoUrl=${logoUrl}&successUrl=${successUrl}&cancelUrl=${errorUrl}`;
             document.getElementById("generated-url").value = url;
         };
 

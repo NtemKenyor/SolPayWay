@@ -90,7 +90,7 @@
     </div>
 
     <!-- Include SDK with timestamp to prevent caching -->
-    <script src="script/sdk.js?t=<?=time()?>&id=23876583583"></script>
+    <script src="script/sdk.js?t=<?=time()?>&id=7487586583750992"></script>
 
     <script>
         // Function to parse URL parameters
@@ -149,8 +149,8 @@
                 const payment = new SolPayWay({
                     amount: params.amount || "0.05",
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
-                    successUrl: params.successUrl || "https://yourwebsite.com/success",
-                    cancelUrl: params.cancelUrl || "https://yourwebsite.com/cancel",
+                    successUrl: params.successUrl || "https://roynek.com/SolPayWay/success.html",
+                    cancelUrl: params.cancelUrl || "https://roynek.com/SolPayWay/error.html",
                     // network: params.network || "localhost",
                     network: params.network || "devnet",
                     // token: params.token || "sol",
@@ -163,8 +163,8 @@
                 const payment = new SolPayWay({
                     amount: params.amount || "0.05",
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
-                    successUrl: params.successUrl || "https://yourwebsite.com/success",
-                    cancelUrl: params.cancelUrl || "https://yourwebsite.com/cancel",
+                    successUrl: params.successUrl || "https://roynek.com/SolPayWay/success.html",
+                    cancelUrl: params.cancelUrl || "https://roynek.com/SolPayWay/error.html",
                     network: params.network || "devnet",
                     // network: params.network || "localhost",
                     // token: params.token || "sol",
