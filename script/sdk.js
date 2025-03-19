@@ -901,8 +901,8 @@ class SolPayWay {
 
     trackTransaction() {
         const self = this;
+        const amount = 0;
 
-        
         if (!this.transactionSignature) return;
         
         let attempts = 0;
