@@ -45,7 +45,7 @@ class SolPayWay {
         // this.network = this.networkRpcMap[network];
         this.network_name = network;
         this.server = (server === 'local') ? 'http://localhost:3000/SolPayWay/backend' : 'https://roynek.com//SolPayWay/backend';
-        this.verification_link = server + '/verify-payment';
+        this.verification_link = this.server + '/verify-payment';
         this.custom = (custom) ? custom : {
             title: 'My Website Payment',
             description: 'Payment for services',
