@@ -686,6 +686,7 @@ class SolPayWay {
                 callback: function (data) {
                     alert('Payment successful! Transaction Reference: ' + data.transaction_id);
                     let VER_LINK = `${self.verification_link}/${data.transaction_id}`;
+                    self.transactionId = data.transaction_id;
                     console.log(`${VER_LINK} ... Others: ${self.successUrl}?network=${self.network_name}&wallet_address=${self.receiver}&sol_amount=${self.sol_amount}&usdt_paid=${amount}&payment_type=${self.payment_type}&s_network=${self.reward_network}&r_network=${self.network_name}&transaction_signature=${self.transactionSignature}&transaction_id=${self.transactionId}&transunique=${self.transUnique}` );
                     fetch(VER_LINK, { method: 'GET' })
                         .then(response => {
