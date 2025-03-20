@@ -147,7 +147,7 @@
             const paymentBtn = document.getElementById("multi-pay-button");
             paymentBtn.onclick = async () => {
                 const payment = new SolPayWay({
-                    amount: params.amount || "0.05",
+                    amount: params.amount || "0.3",
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
                     successUrl: params.successUrl || "https://roynek.com/SolPayWay/success.html",
                     cancelUrl: params.cancelUrl || "https://roynek.com/SolPayWay/error.html",
@@ -161,7 +161,7 @@
             const payNowBtn = document.getElementById("pay-button");
             payNowBtn.onclick = async () => {
                 const payment = new SolPayWay({
-                    amount: params.amount || "0.05",
+                    amount: params.amount || "0.3",
                     receiver: params.receiver || "3Wj9BHs2N75vgEKNGM62QGEPToRQcopK1giZCG2iMCX3",
                     successUrl: params.successUrl || "https://roynek.com/SolPayWay/success.html",
                     cancelUrl: params.cancelUrl || "https://roynek.com/SolPayWay/error.html",
