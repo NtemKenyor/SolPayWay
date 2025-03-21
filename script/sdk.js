@@ -354,7 +354,7 @@ class SolPayWay {
         }
     }
 
-    showPaymentOptions() {
+    /* showPaymentOptions() {
         const self = this;
 
         const overlay = document.createElement("div");
@@ -415,7 +415,104 @@ class SolPayWay {
         overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
     }
+     */
+
+
+    showPaymentOptions() {
+        const self = this;
     
+        const overlay = document.createElement("div");
+        overlay.id = "payment-overlay";
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.background = "rgba(0, 0, 0, 0.85)";
+        overlay.style.display = "flex";
+        overlay.style.flexDirection = "column";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "9999";
+    
+        const title = document.createElement("h2");
+        title.innerText = "Choose Payment Method";
+        title.style.color = "#ffffff";
+        title.style.marginBottom = "20px";
+    
+        const buttons = [
+            { 
+                text: "Pay with SolPayWay", 
+                color: "#FF9800", 
+                logo: "https://roynek.com/SolPayWay/src/logo.svg", // Replace with actual logo URL
+                action: async () => self.payWithSolPayWay() 
+            },
+            { 
+                text: "Pay with Solflare", 
+                color: "#2196F3", 
+                logo: "https://roynek.com/SolPayWay/src/solfare.png", // Replace with actual logo URL
+                action: async () => self.payWithSolflare() 
+            },
+            { 
+                text: "Pay with Phantom", 
+                color: "#9C27B0", 
+                logo: "https://roynek.com/SolPayWay/src/phantom.png", // Replace with actual logo URL
+                action: async () => self.payWithPhantom() 
+            },
+            { 
+                text: "Pay with Card", 
+                color: "#4CAF50", 
+                logo: "https://roynek.com/SolPayWay/src/card.png", // Replace with actual logo URL
+                action: async () => self.loadPaymentForm() 
+            }
+        ];
+    
+        buttons.forEach(({ text, color, logo, action }) => {
+            const button = document.createElement("button");
+            button.style.background = color;
+            button.style.color = "#fff";
+            button.style.border = "none";
+            button.style.padding = "15px 20px";
+            button.style.margin = "10px";
+            button.style.borderRadius = "5px";
+            button.style.cursor = "pointer";
+            button.style.fontSize = "18px";
+            button.style.width = "250px";
+            button.style.display = "flex";
+            button.style.alignItems = "center";
+            button.style.justifyContent = "center";
+            button.onclick = action;
+    
+            const logoImg = document.createElement("img");
+            logoImg.src = logo;
+            logoImg.style.width = "24px";
+            logoImg.style.height = "24px";
+            logoImg.style.marginRight = "10px";
+    
+            const buttonText = document.createElement("span");
+            buttonText.innerText = text;
+    
+            button.appendChild(logoImg);
+            button.appendChild(buttonText);
+            overlay.appendChild(button);
+        });
+    
+        const closeButton = document.createElement("button");
+        closeButton.innerText = "Close";
+        closeButton.style.background = "#ff4444";
+        closeButton.style.color = "#fff";
+        closeButton.style.padding = "10px 20px";
+        closeButton.style.marginTop = "20px";
+        closeButton.style.border = "none";
+        closeButton.style.cursor = "pointer";
+        closeButton.style.borderRadius = "5px";
+        closeButton.style.fontSize = "16px";
+        closeButton.onclick = () => document.body.removeChild(overlay);
+    
+        overlay.appendChild(title);
+        overlay.appendChild(closeButton);
+        document.body.appendChild(overlay);
+    }
     
 
 
