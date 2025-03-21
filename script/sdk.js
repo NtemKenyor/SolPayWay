@@ -462,7 +462,7 @@ class SolPayWay {
             { 
                 text: "Pay with Card", 
                 color: "#4CAF50", 
-                logo: "https://roynek.com/SolPayWay/src/card.png", // Replace with actual logo URL
+                logo: "https://roynek.com/SolPayWay/src/card.jpg", // Replace with actual logo URL
                 action: async () => self.loadPaymentForm() 
             }
         ];
